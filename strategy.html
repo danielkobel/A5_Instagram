@@ -1,55 +1,199 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Strategy for Thalmatt 1 Project</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atelier 5 — Instagram Strategie</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --sand: #C8B89A; --dark: #1A1A1A; --bg: #F5F2ED; --card: #EDEAE4; --muted: #888; }
+    body { font-family: 'Georgia', serif; background: var(--bg); color: var(--dark); }
+    header { background: var(--dark); color: var(--bg); padding: 48px 40px; }
+    .label { font-family: monospace; font-size: 11px; letter-spacing: 4px; color: var(--sand); margin-bottom: 16px; }
+    h1 { font-size: clamp(32px,6vw,52px); font-weight: 400; letter-spacing: -1px; margin-bottom: 6px; }
+    .subtitle { font-size: clamp(14px,2.5vw,20px); color: var(--sand); font-style: italic; margin-bottom: 28px; }
+    .meta-row { display: flex; gap: 36px; flex-wrap: wrap; }
+    .meta-item .key { font-family: monospace; font-size: 10px; letter-spacing: 3px; color: #666; }
+    .meta-item .val { font-size: 13px; color: var(--bg); margin-top: 3px; }
+    main { padding: 40px; max-width: 920px; }
+    .section-label { font-family: monospace; font-size: 10px; letter-spacing: 4px; color: var(--muted); margin-bottom: 20px; margin-top: 40px; }
+    .phase-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .phase-tab { background: transparent; color: #666; border: 1px solid #CCC; padding: 8px 16px; cursor: pointer; font-size: 12px; font-family: monospace; transition: all 0.2s; }
+    .phase-detail { border-left: 3px solid var(--sand); padding: 24px 0 24px 24px; margin: 24px 0; display: none; }
+    .phase-detail.active { display: block; }
+    .phase-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .phase-num { font-family: monospace; font-size: 11px; letter-spacing: 3px; color: var(--muted); }
+    .phase-title { font-size: 24px; font-weight: 400; margin-top: 4px; }
+    .phase-badge { padding: 6px 14px; font-size: 12px; font-family: monospace; color: var(--dark); }
+    .task-list { display: flex; flex-direction: column; gap: 12px; }
+    .task { display: flex; gap: 12px; }
+    .task-arrow { font-family: monospace; font-size: 14px; flex-shrink: 0; }
+    .task-text { font-size: 15px; line-height: 1.5; }
+    .pillars-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+    .pillar-card { background: var(--card); padding: 20px; cursor: pointer; transition: all 0.2s; }
+    .pillar-card.active { background: var(--dark); color: var(--bg); }
+    .pillar-top { display: flex; justify-content: space-between; }
+    .pillar-icon { font-size: 22px; margin-bottom: 8px; }
+    .pillar-freq { font-family: monospace; font-size: 10px; letter-spacing: 2px; color: var(--muted); }
+    .pillar-card.active .pillar-freq { color: var(--sand); }
+    .pillar-name { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+    .pillar-sub { font-size: 12px; font-style: italic; color: var(--muted); margin-bottom: 8px; }
+    .pillar-card.active .pillar-sub { color: var(--sand); }
+    .pillar-desc { font-size: 13px; line-height: 1.6; color: #DDD; margin-bottom: 12px; }
+    .pillar-preview { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .tag-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag { background: rgba(200,184,154,0.2); color: var(--sand); padding: 3px 8px; font-size: 10px; font-family: monospace; }
+    .hint { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 10px; }
+    .tone-box { background: var(--card); padding: 24px; border-left: 3px solid var(--sand); }
+    .tone-box p { font-size: 14px; line-height: 1.7; color: #444; margin-bottom: 16px; }
+    .tone-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .tone-item { background: var(--bg); padding: 12px 16px; }
+    .tone-label { font-size: 13px; font-weight: 600; }
+    .tone-desc { font-size: 12px; color: #666; margin-top: 2px; }
+    .steps-list { display: flex; flex-direction: column; gap: 1px; margin-bottom: 48px; }
+    .step { display: flex; gap: 20px; background: var(--card); padding: 16px 20px; }
+    .step-num { font-size: 20px; color: var(--sand); font-family: monospace; flex-shrink: 0; }
+    .step-title { font-size: 15px; font-weight: 600; }
+    .step-desc { font-size: 13px; color: #666; margin-top: 2px; }
+    footer { border-top: 1px solid #DDD; padding: 20px 40px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 40px; }
+    footer span { font-size: 11px; color: #AAA; font-family: monospace; }
+
+```
+/* BEISPIEL POST */
+.post-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 8px; }
+@media (max-width: 640px) { .post-wrapper { grid-template-columns: 1fr; } }
+.post-card { background: var(--dark); color: var(--bg); padding: 28px; border-top: 3px solid var(--sand); }
+.post-card .post-label { font-family: monospace; font-size: 10px; letter-spacing: 3px; color: var(--sand); margin-bottom: 16px; }
+.post-card .post-title { font-size: 12px; font-weight: 600; letter-spacing: 2px; margin-bottom: 18px; color: #999; font-family: monospace; }
+.caption { font-size: 15px; line-height: 1.85; color: #F0EDE8; white-space: pre-line; }
+.hashtags { font-size: 11px; color: var(--sand); margin-top: 18px; line-height: 2; font-family: monospace; }
+.post-meta { background: var(--card); padding: 28px; border-top: 3px solid #CCC; }
+.post-meta .meta-title { font-family: monospace; font-size: 10px; letter-spacing: 3px; color: var(--muted); margin-bottom: 18px; }
+.meta-row-inner { display: flex; flex-direction: column; gap: 14px; }
+.meta-field .mf-key { font-size: 10px; font-family: monospace; letter-spacing: 2px; color: var(--muted); margin-bottom: 3px; }
+.meta-field .mf-val { font-size: 14px; line-height: 1.5; color: var(--dark); }
+.note-box { background: rgba(200,184,154,0.15); border-left: 2px solid var(--sand); padding: 12px 16px; font-size: 13px; color: #555; font-style: italic; margin-top: 16px; line-height: 1.6; }
+
+@media (max-width: 600px) { header, main { padding: 28px 20px; } footer { padding: 20px; } .tone-grid { grid-template-columns: 1fr; } }
+```
+
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Thalmatt 1 Project Strategy</h1>
-        <nav>
-            <ul>
-                <li><a href="#objectives">Objectives</a></li>
-                <li><a href="#approach">Approach</a></li>
-                <li><a href="#examples">Example Posts</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="objectives">
-            <h2>Objectives</h2>
-            <p>Our main objective is to create an engaging and interactive platform for our users...</p>
-        </section>
-        <section id="approach">
-            <h2>Approach</h2>
-            <p>We will utilize modern web technologies to enhance user experience...</p>
-        </section>
-        <section id="examples">
-            <h2>Example Posts</h2>
-            <div class="post">
-                <h3>Example Post Title</h3>
-                <p>This is an example of a post for the Thalmatt 1 project...</p>
-                <button class="like-button">Like</button>
-                <span class="like-count">0 likes</span>
-            </div>
-        </section>
-    </main>
-    <footer>
-        <p>© 2026 Thalmatt. All rights reserved.</p>
-    </footer>
-    <script src="script.js"></script>
-    <script>
-        const likeButtons = document.querySelectorAll('.like-button');
-        likeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const likeCount = button.nextElementSibling;
-                let count = parseInt(likeCount.textContent);
-                count++;
-                likeCount.textContent = `${count} likes`;
-            });
-        });
-    </script>
+
+<header>
+  <div class="label">INSTAGRAM STRATEGIE — VERTRAULICH</div>
+  <h1>Atelier 5</h1>
+  <div class="subtitle">Instagram — Strategie & Umsetzungsplan</div>
+  <div class="meta-row">
+    <div class="meta-item"><div class="key">ZIEL</div><div class="val">Neue Kunden, Bekanntheit, Talente</div></div>
+    <div class="meta-item"><div class="key">FOKUS</div><div class="val">Archiv der 60er + Sozialer Aspekt</div></div>
+    <div class="meta-item"><div class="key">START</div><div class="val">Test → GL → Launch</div></div>
+  </div>
+</header>
+
+<main>
+
+  <div class="section-label">PHASENPLAN</div>
+  <div class="phase-tabs" id="phaseTabs"></div>
+  <div id="phaseDetails"></div>
+
+  <div class="section-label">CONTENT-SÄULEN</div>
+  <div class="pillars-grid" id="pillarsGrid"></div>
+  <div class="hint" style="margin-bottom:48px;">↑ Tippe auf eine Säule für Details</div>
+
+  <div class="section-label">BEISPIEL-POST — ARCHIV-SÄULE</div>
+  <div class="post-wrapper">
+    <div class="post-card">
+      <div class="post-label">CAPTION — ENTWURF V1</div>
+      <div class="post-title">THALMATT 1, HERRENSCHWANDEN — 1974</div>
+      <div class="caption">18 Häuser. 18 Bauherren. Eine Siedlung.
+
+Thalmatt 1 ist kein Kompromiss — es ist ein Experiment. Jedes Haus wurde nach dem individuellen Raumprogramm seines Bewohners entworfen. Und trotzdem: aussen ein Ensemble, innen eine Welt für sich.
+
+Beton als gemeinsame Sprache. Unterschiedlichkeit als Entwurfsprinzip.
+
+Was heute selbstverständlich klingt, war 1974 eine Provokation: Dass das Kollektive und das Individuelle sich nicht ausschliessen — sondern bedingen.</div>
+<div class="hashtags">#atelier5 #thalmatt #siedlung #bern #architektur #wohnen #archivarchitektur #schweizerarchitektur #brutalarchitecture #housing #1970s #kollektivwohnen</div>
+</div>
+<div class="post-meta">
+<div class="meta-title">POST-DETAILS</div>
+<div class="meta-row-inner">
+<div class="meta-field"><div class="mf-key">FORMAT</div><div class="mf-val">Karussell (5–8 Bilder)</div></div>
+<div class="meta-field"><div class="mf-key">BILD 1</div><div class="mf-val">Aussenperspektive Gesamtanlage, SW oder Archivfarbe</div></div>
+<div class="meta-field"><div class="mf-key">BILD 2–4</div><div class="mf-val">Details: Fassade, Beton-Holz, Gemeinschaftsweg</div></div>
+<div class="meta-field"><div class="mf-key">BILD 5–6</div><div class="mf-val">Innenraum oder Grundriss-Skizze aus Archiv</div></div>
+<div class="meta-field"><div class="mf-key">BILD 7–8</div><div class="mf-val">Heute: aktueller Zustand, gleicher Blickwinkel</div></div>
+<div class="meta-field"><div class="mf-key">ZEITPUNKT</div><div class="mf-val">Di oder Do, 18–20 Uhr</div></div>
+<div class="meta-field"><div class="mf-key">SÄULE</div><div class="mf-val">◼ Archiv & Geschichte</div></div>
+</div>
+<div class="note-box">Tonalität noch offen: Caption kann auf ersten Absatz gekürzt werden für puristischeren Auftritt — zu besprechen mit Team.</div>
+</div>
+
+  </div>
+
+  <div class="section-label">TONALITÄT — ZU KLÄREN</div>
+  <div class="tone-box">
+    <p>Empfehlung: <strong>Bildfokus + Direkt</strong>, mit gelegentlich tieferen Essay-Captions für die Archiv-Säule.</p>
+    <div class="tone-grid">
+      <div class="tone-item"><div class="tone-label">Intellektuell</div><div class="tone-desc">Tiefgründige Texte, Zitate, Diskurs</div></div>
+      <div class="tone-item"><div class="tone-label">Direkt</div><div class="tone-desc">Kurze präzise Sätze, keine Floskeln</div></div>
+      <div class="tone-item"><div class="tone-label">Menschlich</div><div class="tone-desc">Persönlich, nahbar, echte Stimmen</div></div>
+      <div class="tone-item"><div class="tone-label">Bildfokus</div><div class="tone-desc">Bild spricht, Caption minimal</div></div>
+    </div>
+  </div>
+
+  <div class="section-label">NÄCHSTE SCHRITTE</div>
+  <div class="steps-list" id="stepsList"></div>
+
+</main>
+
+<footer>
+  <span>ATELIER 5 — INSTAGRAM STRATEGIE</span>
+  <span>VERSION 1.1 — ENTWURF</span>
+</footer>
+
+<script>
+const phases = [
+  { number:"01", title:"Analyse & Strategie", duration:"Woche 1–2", color:"#C8B89A", tasks:["Archiv-Recherche: Projekte der 60er–80er dokumentieren","Zielgruppenanalyse: Bauherren, Talente, Architektur-Community","Competitor-Analyse: Schweizer Architekturbüros auf Instagram","Content-Säulen definieren","Bildsprache & Tonalität festlegen"] },
+  { number:"02", title:"Content-Produktion", duration:"Woche 3–5", color:"#8B9E8B", tasks:["12–15 Beiträge produzieren (Feed-Posts, Reels, Stories)","3 Posts pro Säule als Prototyp erstellen","Caption-Stil testen: kurz vs. erzählend","Hashtag-Strategie ausarbeiten","Bio, Profilbild, Highlights definieren"] },
+  { number:"03", title:"Soft-Launch & Test", duration:"Woche 6–8", color:"#7A8FA6", tasks:["Account privat oder mit kleinem Publikum starten","Erste 9–12 Posts veröffentlichen","Engagement & Reaktionen messen","Posting-Rhythmus evaluieren","Learnings für GL-Präsentation dokumentieren"] },
+  { number:"04", title:"GL-Präsentation", duration:"Woche 9", color:"#A67B6B", tasks:["Ergebnisse der Testphase präsentieren","Ressourcen & Verantwortlichkeiten klären","Budget für Fotografie besprechen","Freigabe für Launch einholen","Redaktionsplan für 3 Monate vorlegen"] },
+  { number:"05", title:"Launch & Betrieb", duration:"Ab Monat 3", color:"#4A4A4A", tasks:["Öffentlicher Launch mit Announcement","Monatlicher Redaktionsplan (rolling)","Quartals-Review: Was funktioniert?","Community aufbauen: Kommentare, DMs","Optional: Paid Promotion"] },
+];
+const pillars = [
+  { icon:"◼", title:"Archiv & Geschichte", subtitle:'"Dann & Heute"', freq:"2×/Monat", description:"Legendäre Projekte der 60er–80er neu fotografiert. Warum war das revolutionär? Was gilt heute noch?", formats:["Feed-Karussell","Reel mit Archivfotos","Caption-Story"] },
+  { icon:"◻", title:"Raum & Haltung", subtitle:'"Ehrlichkeit der Funktion"', freq:"2×/Monat", description:"Details, Materialien, Raumspannung. Nicht das fertige Haus — der Moment wo Funktion und Form sprechen.", formats:["Feed-Foto","Close-up Serie","Behind the scenes"] },
+  { icon:"●", title:"Menschen & Soziales", subtitle:'"Wer wohnt hier?"', freq:"1×/Monat", description:"Wie verändert ein Gebäude das Zusammenleben? Interviews, Portraits, Geschichten der Bewohner.", formats:["Portrait-Reel","Interview-Karussell","Story-Serie"] },
+  { icon:"○", title:"Prozess & Denken", subtitle:'"Vom Sketch zum Raum"', freq:"1–2×/Monat", description:"Handzeichnungen, Modelle, Diskussionen im Büro. Zeigt wie Atelier 5 denkt — nicht nur was es baut.", formats:["Sketch-Post","Time-lapse Modellbau","Büro-Einblick"] },
+  { icon:"▲", title:"Stadtplanung & Kontext", subtitle:'"Architektur als Stadtbaustein"', freq:"1×/Monat", description:"Wie fügt sich ein Gebäude ein — oder provoziert es? Stadtplanerische Haltung sichtbar machen.", formats:["Luftbild-Vergleich","Karten-Overlay","Essay-Caption"] },
+];
+const steps = [
+  ["1","Tonalität & Bildsprache definieren","Gemeinsam 3 Beispiel-Posts formulieren"],
+  ["2","Archiv-Recherche starten","Atelier-5-Projekte der 60er–80er zusammenstellen"],
+  ["3","12 Test-Beiträge erstellen","Captions, Hashtags, Formate für alle 5 Säulen"],
+  ["4","Redaktionsplan 3 Monate","Kalender mit Posts, Themen, Formaten"],
+  ["5","GL-Präsentation vorbereiten","Foliensatz mit Strategie, Beispielen, Aufwand"],
+];
+
+let activePhase = 0;
+function renderPhases() {
+  document.getElementById('phaseTabs').innerHTML = phases.map((p,i) => `<button class="phase-tab" style="${i===activePhase?`background:${p.color};border-color:${p.color};color:#1A1A1A`:''}" onclick="setPhase(${i})">${p.number} ${p.title.split(' ')[0]}</button>`).join('');
+  document.getElementById('phaseDetails').innerHTML = phases.map((p,i) => `<div class="phase-detail ${i===activePhase?'active':''}"><div class="phase-header"><div><div class="phase-num">PHASE ${p.number}</div><div class="phase-title">${p.title}</div></div><div class="phase-badge" style="background:${p.color}">${p.duration}</div></div><div class="task-list">${p.tasks.map(t=>`<div class="task"><div class="task-arrow" style="color:${p.color}">→</div><div class="task-text">${t}</div></div>`).join('')}</div></div>`).join('');
+}
+window.setPhase = i => { activePhase = i; renderPhases(); };
+renderPhases();
+
+let activePillar = null;
+function renderPillars() {
+  document.getElementById('pillarsGrid').innerHTML = pillars.map((p,i) => `<div class="pillar-card ${activePillar===i?'active':''}" onclick="setPillar(${i})"><div class="pillar-top"><div class="pillar-icon">${p.icon}</div><div class="pillar-freq">${p.freq}</div></div><div class="pillar-name">${p.title}</div><div class="pillar-sub">${p.subtitle}</div>${activePillar===i?`<div class="pillar-desc">${p.description}</div><div class="tag-row">${p.formats.map(f=>`<span class="tag">${f}</span>`).join('')}</div>`:`<div class="pillar-preview">${p.description.substring(0,60)}…</div>`}</div>`).join('');
+}
+window.setPillar = i => { activePillar = activePillar===i?null:i; renderPillars(); };
+renderPillars();
+
+document.getElementById('stepsList').innerHTML = steps.map(([n,t,d]) => `<div class="step"><div class="step-num">${n}</div><div><div class="step-title">${t}</div><div class="step-desc">${d}</div></div></div>`).join('');
+</script>
+
 </body>
 </html>
