@@ -3,34 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atelier 5 Instagram Strategy</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>Strategy for Thalmatt 1 Project</title>
 </head>
 <body>
-    <h1>Atelier 5 Instagram Strategy</h1>
-    <h2>Phases</h2>
-    <ul>
-        <li>Phase 1: Research</li>
-        <li>Phase 2: Planning</li>
-        <li>Phase 3: Execution</li>
-        <li>Phase 4: Evaluation</li>
-    </ul>
-    <h2>Pillars</h2>
-    <ol>
-        <li>Content Quality</li>
-        <li>Engagement</li>
-        <li>Growth</li>
-        <li>Analytics</li>
-    </ol>
-    <h2>Tone</h2>
-    <p>Friendly, Professional, and Approachable</p>
-    <h2>Steps</h2>
-    <ol>
-        <li>Define Target Audience</li>
-        <li>Create Content Calendar</li>
-        <li>Design Visual Style</li>
-        <li>Implement Posting Schedule</li>
-        <li>Monitor and Respond to Engagement</li>
-        <li>Analyze Performance Metrics</li>
-    </ol>
+    <header>
+        <h1>Thalmatt 1 Project Strategy</h1>
+        <nav>
+            <ul>
+                <li><a href="#objectives">Objectives</a></li>
+                <li><a href="#approach">Approach</a></li>
+                <li><a href="#examples">Example Posts</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="objectives">
+            <h2>Objectives</h2>
+            <p>Our main objective is to create an engaging and interactive platform for our users...</p>
+        </section>
+        <section id="approach">
+            <h2>Approach</h2>
+            <p>We will utilize modern web technologies to enhance user experience...</p>
+        </section>
+        <section id="examples">
+            <h2>Example Posts</h2>
+            <div class="post">
+                <h3>Example Post Title</h3>
+                <p>This is an example of a post for the Thalmatt 1 project...</p>
+                <button class="like-button">Like</button>
+                <span class="like-count">0 likes</span>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2026 Thalmatt. All rights reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        const likeButtons = document.querySelectorAll('.like-button');
+        likeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const likeCount = button.nextElementSibling;
+                let count = parseInt(likeCount.textContent);
+                count++;
+                likeCount.textContent = `${count} likes`;
+            });
+        });
+    </script>
 </body>
 </html>
